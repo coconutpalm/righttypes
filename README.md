@@ -13,7 +13,7 @@ Because *knowing* that one's data is clean helps one be confident in one's own c
 
 ## Show me some code
 
-Imagine that a type constructor is just a function that returns its input (e.g.: like `identity`) for valid arguments or that either throws `ex-info` with a `TypeCtorError` or simply returns a `TypeCtorError` for invalid arguments.  For example:
+Imagine that a type constructor is just a function that returns its input (e.g.: like `identity`) for valid arguments or that can be configured to either throw `ex-info` with a `TypeCtorError` or to simply return a `TypeCtorError` for invalid arguments.  For example:
 
 ```clojure
 (def person-categories
