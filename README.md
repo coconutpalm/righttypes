@@ -1,2 +1,2 @@
 # righttypes
-Because computing failures is more useful than asking if (valid? x)
+Because precisely computing type mismatches is more useful than asking if (valid? x).
