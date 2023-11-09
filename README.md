@@ -9,6 +9,7 @@ Because *knowing* that one's data is clean helps one be confident in one's own c
 *  Coexists with and enhances other Clojure \"type\" libraries including Specs and Malli.
 *  Totally transparent to the rest of your code.
 *  Implemented in barely a page of code with 0 dependencies.
+*  Thoroughly tested using rich comment form tests that illustrate correct usage.
 
 ## Show me some code
 
