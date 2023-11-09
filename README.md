@@ -76,6 +76,8 @@ For example:
 
 Type constructors of this style integrate seamlessly with ordinary Lisp since their behavior is transparent to downstream operations.  They also encourage rich error checking/reporting and integrate well with other predicate-based "type systems" in Clojure.
 
+In the code above, since `Person` "type constructor" function is built using the `T!` macro, any invalid `Person` will throw `ex-info` at compile time.
+
 Want to know more?
 
 ## What kinds of things can be predicates?
@@ -88,3 +90,5 @@ Constructor arguments are determined to be valid iff `(predicate args)` passes, 
 *  To validate a map, `predicate` can be a map in the form `{:key pred?}` or `{(Opt. :key) pred?}` where the `(Opt. :key)` form denotes an optional key.
 *  `predicate` can be another type constructor function.
 *  `predicate` can be a `java.lang.Class`, which is automatically rewritten as `(fn [x] (instance? TheClass x))`
+
+You can write your own predicates too.  For details, see the source code and tests.
