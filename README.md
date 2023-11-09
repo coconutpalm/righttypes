@@ -2,6 +2,8 @@
 
 ## Why should I care?
 
+Because *knowing* that one's data is clean helps one be confident in one's own code!
+
 *  Not a framework - Just some functions / macros that stand on their own.
 *  Doesn't try to \"boil the ocean\" or be the One Type Library to Rule Them All.
 *  Coexists with and enhances other Clojure \"type\" libraries including Specs and Malli.
