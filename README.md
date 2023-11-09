@@ -95,4 +95,4 @@ You can write your own predicates.  For details, see the source code and tests.
 
 ## What do failure messages look like?
 
-The best documentation is documentation that is clear and up-to-date.  The source code is always up-to-date by definition.  The `T` and `T!` macros automatically capture and stringify your source code so it can be used as part of the diagnostics that they generate.
+The `T` and `T!` macros automatically capture and stringify your source code so it can be used as part of the diagnostics that they generate on failure.  Within collections, they automatically capture the path to the offending element as well as its position within the collection.
