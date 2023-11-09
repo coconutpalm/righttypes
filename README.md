@@ -49,7 +49,7 @@ Imagine that a type constructor is just a function that returns its input (e.g.:
 
 In the above code the `T` macro builds a type constructor that always returns a value: either its input (for type matches) or a `TypeCtorError` for mismatches.  The `T!` macro behaves like `identity` for type matches, but throws `ex-info` with a `TypeCtorError` inside `ex-data` for type mismatches.
 
-Careful use of the `T!` macro in code like the above has the effect of checking hard-coded data structures like this at compile time without sacrificing the flexibility that Lispers have come to appreciate.
+Careful use of the `T!` macro in code like the above has the effect of checking hard-coded data structures at compile time without sacrificing the data flexibility that Lispers have come to appreciate.
 
 For example:
 
@@ -75,6 +75,8 @@ For example:
 ```
 
 Type constructors of this style integrate seamlessly with ordinary Lisp since their behavior is transparent to downstream operations.  They also encourage rich error checking/reporting and integrate well with other predicate-based "type systems" in Clojure.
+
+Want to know more?
 
 ## What kinds of things can be predicates?
 
