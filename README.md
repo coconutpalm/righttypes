@@ -82,7 +82,7 @@ In the code above, since `Person` "type constructor" function is built using the
 
 Constructor arguments are determined to be valid iff `(predicate args)` passes, but with a twist:
 
-*  `predicate` can be another type constructor function.  These are automatically distinguished from ordinary predicates and checked appropriately.
+*  `predicate` can be another type constructor function.  These are automatically distinguished from ordinary predicates and checked appropriately.  This means that type constructor functions can be nested.
 *  `predicate` can be a function like in specs.
 *  `predicate` can be a `java.lang.Class`, which is automatically rewritten as `(fn [x] (instance? TheClass x))`
 *  `predicate` can be anything that is valid in function position, like the sets used in the example above.
