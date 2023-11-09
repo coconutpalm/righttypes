@@ -78,8 +78,6 @@ Type constructors of this style integrate seamlessly with ordinary Lisp since th
 
 In the code above, since `Person` "type constructor" function is built using the `T!` macro, any invalid `Person` will throw `ex-info` at compile time.
 
-Want to know more?
-
 ## What kinds of things can be predicates?
 
 Constructor arguments are determined to be valid iff `(predicate args)` passes, but with a twist:
@@ -91,4 +89,10 @@ Constructor arguments are determined to be valid iff `(predicate args)` passes, 
 *  `predicate` can be another type constructor function.
 *  `predicate` can be a `java.lang.Class`, which is automatically rewritten as `(fn [x] (instance? TheClass x))`
 
-You can write your own predicates too.  For details, see the source code and tests.
+There are helper functions for creating specialized predicates, too.  For example, `seq-of` where each element in a `Seqable` collection must satisfy a predicate.
+
+You can write your own predicates.  For details, see the source code and tests.
+
+## What do failure messages look like?
+
+The best documentation is documentation that is clear and up-to-date.  The source code is always up-to-date by definition.  The `T` and `T!` macros automatically capture and stringify your source code so it can be used as part of the diagnostics that they generate.
