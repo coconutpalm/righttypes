@@ -82,14 +82,14 @@ In the code above, since `Person` "type constructor" function is built using the
 
 Constructor arguments are determined to be valid iff `(predicate args)` passes, but with a twist:
 
+*  `predicate` can be another type constructor function.  These are automatically distinguished from ordinary predicates and checked appropriately.
 *  `predicate` can be a function like in specs.
-*  Anything that is valid in function position, like the sets used above, can be a predicate.
-*  To validate fixed-length vectors positionally, `predicate` can be a vector of predicates where each predicate validates the value in its corresponding position.
-*  To validate a map, `predicate` can be a map in the form `{:key pred?}` or `{(Opt. :key) pred?}` where the `(Opt. :key)` form denotes an optional key.
-*  `predicate` can be another type constructor function.
 *  `predicate` can be a `java.lang.Class`, which is automatically rewritten as `(fn [x] (instance? TheClass x))`
+*  `predicate` can be anything that is valid in function position, like the sets used in the example above.
+*  For validating sequences, `predicate` can be a vector of predicates where each predicate validates the value in the corresponding position.
+*  For validating maps, `predicate` can be a map in the form `{:key pred?}` or `{(Opt. :key) pred?}` where the `(Opt. :key)` form denotes an optional key.  (Extra map keys are allowed by default and not checked, but this behavior can be overridden.)
 
-There are helper functions for creating specialized predicates, too.  For example, `seq-of` where each element in a `Seqable` collection must satisfy a predicate.
+There are helper functions for creating specialized predicates.  For example, `seq-of` where each element in a `Seqable` collection must satisfy a predicate.
 
 You can write your own predicates.  For details, see the source code and tests.
 
