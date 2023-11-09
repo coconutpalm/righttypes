@@ -1,6 +1,6 @@
 # righttypes
 
-Because precisely computing type mismatches is more useful than asking if (valid? x).
+Precisely computing type mismatches is more useful than asking if (valid? x).
 
 * Not a framework - Just some functions / macros that stand on their own.
 * Doesn't try to \"boil the ocean\" or be the One Type Library to Rule Them All.
