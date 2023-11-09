@@ -87,3 +87,4 @@ Constructor arguments are determined to be valid iff `(predicate args)` passes, 
 *  To validate fixed-length vectors positionally, `predicate` can be a vector of predicates where each predicate validates the value in its corresponding position.
 *  To validate a map, `predicate` can be a map in the form `{:key pred?}` or `{(Opt. :key) pred?}` where the `(Opt. :key)` form denotes an optional key.
 *  `predicate` can be another type constructor function.
+*  `predicate` can be a `java.lang.Class`, which is automatically rewritten as `(fn [x] (instance? TheClass x))`
