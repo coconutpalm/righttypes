@@ -56,7 +56,7 @@ In the above code the `T` macro builds a type constructor function that always r
 
 Type mismatch failures bubble up the data structure, so if `Address` fails, `Person` will fail (and `throw`).
 
-Used in data literals, the `T!` macro checks values at compile time without sacrificing the flexibility that most Lispers appreciate:
+Used in data literals, the `T!` macro checks values at compile time without sacrificing the flexibility that Lispers appreciate:
 
 ```clojure
 (def people
@@ -90,7 +90,7 @@ Type Constructor arguments are determined to be valid iff `(predicate args)` pas
 *  `predicate` can be another type constructor function.  These are automatically distinguished from ordinary predicates and checked appropriately.  This means that type constructor functions can be nested as with `Address` above.
 *  `predicate` can be a function like in specs.
 *  `predicate` can be a `java.lang.Class`, which is automatically rewritten as `(fn [x] (instance? TheClass x))`
-*  `predicate` can be anything that is valid in function position, like the sets used in the example above.
+*  `predicate` can be any value that can also be used as a predicate function, like the sets used in the example above.
 *  For validating sequences, `predicate` can be a vector of predicates where each predicate validates the value in the corresponding position.
 *  For validating maps, `predicate` can be a map in the form `{:key pred?}` or `{(Opt. :key) pred?}` where the `(Opt. :key)` form denotes an optional key.  (Extra map keys are allowed by default and not checked, but this behavior can be overridden.)
 
