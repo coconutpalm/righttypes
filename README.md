@@ -74,13 +74,13 @@ For example:
 
 Type constructors of this style integrate seamlessly with ordinary Lisp since their behavior is transparent to downstream operations.  They also encourage rich error checking/reporting and integrate well with other predicate-based "type systems" in Clojure.
 
-In the code above, since `Person` "type constructor" function is built using the `T!` macro, any invalid `Person` will throw `ex-info` at compile time.
+In the code above, since the `Person` "type constructor" function is built using the `T!` macro, any invalid `Person` will throw `ex-info` at compile time.
 
 ## What kinds of things can be predicates?
 
-Constructor arguments are determined to be valid iff `(predicate args)` passes, but with a twist:
+Type Constructor arguments are determined to be valid iff `(predicate args)` passes, but with a twist:
 
-*  `predicate` can be another type constructor function.  These are automatically distinguished from ordinary predicates and checked appropriately.  This means that type constructor functions can be nested.
+*  `predicate` can be another type constructor function.  These are automatically distinguished from ordinary predicates and checked appropriately.  This means that type constructor functions can be nested as with `Address` above.
 *  `predicate` can be a function like in specs.
 *  `predicate` can be a `java.lang.Class`, which is automatically rewritten as `(fn [x] (instance? TheClass x))`
 *  `predicate` can be anything that is valid in function position, like the sets used in the example above.
