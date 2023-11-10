@@ -1,4 +1,4 @@
-# righttypes - Because computing mismatches is more useful than asking if (valid? x).
+# RightTypes - Because computing mismatches is more useful than asking if (valid? x).
 
 *Knowing* that one's data is clean increases confidence in one's own code!
 
