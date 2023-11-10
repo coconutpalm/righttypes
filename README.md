@@ -13,9 +13,12 @@ Knowing *exactly where* data does not match expactations increases productivity 
 
 ## Show me some code
 
-Imagine that a type constructor is just a function that returns its input (e.g.: like `identity`) for valid arguments or that can be configured to either throw `ex-info` with a `TypeCtorError` or to simply return a `TypeCtorError` for invalid arguments.  For example:
+Imagine a "type constructor" that is just a function that behaves like `identity` for valid input values and that otherwise returns (or throws) detailed error diagnostics when input values aren't valid.
+
+Then one could write:
 
 ```clojure
+; First some maps used like enumerations
 (def person-categories
   {:peer "Professional peer contact"
    :recruiter "Recruiter"
@@ -27,6 +30,7 @@ Imagine that a type constructor is just a function that returns its input (e.g.:
   {:in-person "In person"
    :electronic "Phone/fax/email/job website, etc."})
 
+; A "type constructor" that returns diagnostics on failure
 (def Address
   (T {:line1 string?
       (Opt. :line2) string?
@@ -34,6 +38,7 @@ Imagine that a type constructor is just a function that returns its input (e.g.:
       :state string?
       :zip string?}))
 
+; A "type constructor" that throws on failure
 (def Person
   (T! {:person-category (set (vals person-categories))
        :contact-type (set (vals contact-types))
