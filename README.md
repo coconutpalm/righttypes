@@ -100,4 +100,45 @@ You can write your own predicates.  For details, see the source code and tests.
 
 ## What do failure messages look like?
 
-The `T` and `T!` macros automatically capture and stringify your source code so it can be used as part of the diagnostics that they generate on failure.  Within collections, they automatically capture the path to the offending element as well as its position within the collection.
+The `T` and `T!` macros automatically capture and stringify your source code so it can be used as part of the diagnostics that they generate on failure.
+
+```clojure
+user> (def Dice (T #{1 2 3 4 5 6}))
+#'user/Dice
+user> (-> (Dice 0) :errors)
+[{:pos nil, :msg "(#{1 4 6 3 2 5} 0)"}]
+```
+
+Within collections, type constructors automatically capture the path to the offending elements as well as their position(s) within the collection.
+
+Let's redefine `Person` above so it returns an error rather than throws an exception, then invoke it from the REPL with some missing keys so we can see the diagnostics:
+
+```clojure
+user> (def Person
+        (T {:person-category (set (vals person-categories))
+            :contact-type (set (vals contact-types))
+            (Opt. :employer-name) string?
+            :contact-person string?
+            (Opt. :preferred-contact) string?
+            :address Address
+            (Opt. :phone) string?
+            :type-of-business string?
+            (Opt. :comment) string?}))
+
+user> (Person {:employer-name "The Cypress Group"
+               :contact-person "Brian Caracciolo"
+               :preferred-contact "https://www.linkedin.com/in/briancaracciolo/"
+               :address (Address {:line1 "1460 Broadway 12th floor"
+                                  :city "New York" :state "NY" :zip "10036"})
+               :type-of-business "Recruiter"})
+{:x
+ {:employer-name "The Cypress Group",
+  :contact-person "Brian Caracciolo",
+  :preferred-contact "https://www.linkedin.com/in/briancaracciolo/",
+  :address {:line1 "1460 Broadway 12th floor", :city "New York", :state "NY", :zip "10036"},
+  :type-of-business "Recruiter"},
+ :errors
+ [{:pos :contact-type, :msg ":contact-type (set (vals contact-types))"}
+  {:pos :person-category, :msg ":person-category (set (vals person-categories))"}],
+ :msg "Missing k/v(s): :contact-type (set (vals contact-types)), :person-category (set (vals person-categories))"}
+```
