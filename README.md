@@ -52,7 +52,7 @@ Then one could write:
 
 ```
 
-In the above code the `T` macro builds a type constructor that always returns a value: either its input (for type matches) or a `TypeCtorError` for mismatches.  The `T!` macro behaves like `identity` for type matches, but throws `ex-info` with a `TypeCtorError` inside `ex-data` for type mismatches.
+In the above code the `T` macro builds a type constructor function that always returns a value: either its input (for type matches) or a `TypeCtorError` for mismatches.  The `T!` macro behaves like `identity` for type matches, but throws `ex-info` with a `TypeCtorError` inside `ex-data` for type mismatches.
 
 Careful use of the `T!` macro in code like the above has the effect of checking hard-coded data structures at compile time without sacrificing the data flexibility that Lispers have come to appreciate.
 
