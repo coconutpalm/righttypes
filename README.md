@@ -1,6 +1,6 @@
 # RightTypes - Because computing mismatches is more useful than asking if (valid? x).
 
-*Knowing* that one's data is clean increases confidence in one's own code!
+*Knowing* that one's data is clean increases confidence in one's own code!  Knowing *exactly where* data does not match expactations increases productivity when things go wrong.
 
 *  Not a framework - Just some functions / macros that stand on their own.
 *  Doesn't try to \"boil the ocean\" or be the One Type Library to Rule Them All.
