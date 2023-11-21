@@ -352,7 +352,6 @@ this default is that optional map keys with typos won't be automatically detecte
  (error-positions (N ["one" 2 "three" 4.0]))  := #{0 2}
  ,)
 
-
 ;; Predicate type constructors ========================================================
 
 (def x-or-err ^::T
@@ -441,6 +440,7 @@ this default is that optional map keys with typos won't be automatically detecte
       (throw (AssertionError. (.toString maybe-error))))))
 
 
+#_{:clj-kondo/ignore [:unused-value :unused-binding]}
 (tests
  "Positional T"
  (def FirstMiddleLastName (T [string? string? (fn [s] (string? s))])) ; Ensure lambda error message code path works
@@ -502,26 +502,28 @@ this default is that optional map keys with typos won't be automatically detecte
  (def DrinkingAgeIllinois (T #(>= % 21)))
  (assert-illinois-drinking-ages DrinkingAgeIllinois))
 
+#_{:clj-kondo/ignore [:unused-value :unused-binding]}
 (tests
- "NESTING"
+  "NESTING"
 
- "- in vectors"
- (def FirstMiddleLastName (T [string? string? string?]))
- (def Address2Lines (T [FirstMiddleLastName string?]))
+  "- in vectors"
+  (def FirstMiddleLastName
+                           (T [string? string? string?]))
+  (def Address2Lines (T [FirstMiddleLastName string?]))
 
- (Address2Lines [["First" "M." "Last"] "Line2"])    := [["First" "M." "Last"] "Line2"]
- (-> (Address2Lines [["First" :M "Last"] "Line2"])
-    :errors first :errors first :msg)               := "(string? :M)"
+  (Address2Lines [["First" "M." "Last"] "Line2"])    := [["First" "M." "Last"] "Line2"]
+  (-> (Address2Lines [["First" :M "Last"] "Line2"])
+     :errors first :errors first :msg)               := "(string? :M)"
 
- "- in maps"
- (def Sub (T {:two/one string? :two/two number?}))
- (def Nested (T {:one number? :two Sub}))
+  "- in maps"
+  (def Sub (T {:two/one string? :two/two number?}))
+  (def Nested (T {:one number? :two Sub}))
 
- (error-positions (Sub {:two/one 1 :two/two 2}))    := #{:two/one}
+  (error-positions (Sub {:two/one 1 :two/two 2}))    := #{:two/one}
 
- (Nested {:one 1 :two {:two/one "one" :two/two 2}}) := {:one 1 :two {:two/one "one" :two/two 2}}
- (Nested {:one 1 :two {:two/one 1 :two/two 2}})
- (-> (Nested {:one 1 :two {:two/one 1 :two/two 2}}) class) := TypeCtorError)
+  (Nested {:one 1 :two {:two/one "one" :two/two 2}}) := {:one 1 :two {:two/one "one" :two/two 2}}
+  (Nested {:one 1 :two {:two/one 1 :two/two 2}})
+  (-> (Nested {:one 1 :two {:two/one 1 :two/two 2}}) class) := TypeCtorError)
 
 
 (defmacro T!
