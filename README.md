@@ -142,3 +142,7 @@ user> (Person {:employer-name "The Cypress Group"
   {:pos :person-category, :msg ":person-category (set (vals person-categories))"}],
  :msg "Missing k/v(s): :contact-type (set (vals contact-types)), :person-category (set (vals person-categories))"}
 ```
+
+## Status of this library
+
+I've now used this library for one small internal production project, and it has exceeded my expectations.  Please let me know what works well for you and what can be improved.  Of course, pull requests are welcome!
