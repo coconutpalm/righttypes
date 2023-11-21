@@ -551,3 +551,42 @@ this default is that optional map keys with typos won't be automatically detecte
   (Named! {:first-name "Dave"})                    :throws clojure.lang.ExceptionInfo
 
   ,)
+
+
+;; Support {:index-value {:key :index-value}} maps ====================================
+
+(defn- index-by
+  "Returns a transducer suitable for transforming a seq of maps into a map of {:key {:id :key}} using `into`.
+
+  (into {} (index-by :key) [{:key :id, ...} ...]"
+  [field]
+  (map (fn [x] [(get x field) x])))
+
+
+(defn indexed
+  "A type constructor to build a map of maps, where a field in each value-map is also the `index-key`.
+  e.g.:
+
+  {:index-value {:key :index-value}}
+
+  EXPERIMENTAL: TODO: Validate result and return TypeCtorError as needed"
+  [map-ctor index-key]
+  (with-ctor-meta
+    (fn [& maps]
+      (let [result (cond
+                     (nil? maps) {}
+                     :else (into {} (index-by index-key) (map map-ctor maps)))]
+        result))))
+
+
+#_{:clj-kondo/ignore [:unused-value :unused-binding]}
+(tests
+  "Happy path"
+  (def Person (T {:key keyword? :first-name string? :last-name string?}))
+  (def PersonDB (indexed Person :key))
+
+  (let [testee (PersonDB {:key :franken :first-name "Franken" :last-name "Stein"}
+                         {:key :charlie :first-name "Charlie" :last-name "Brown"})]
+    (-> testee :franken :last-name) := "Stein")
+
+  "Sadness (TODO: Because for now we're happy all the time)")
