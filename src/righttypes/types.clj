@@ -539,7 +539,8 @@ this default is that optional map keys with typos won't be automatically detecte
   if its input value fails to match the specified type.  If the type constructor
   throws, the `ex-data` is the `TypeCtorError` returned by the type constructor.
 
-  Experimental API."
+  Experimental API.  I'm not sure that type constructors ever should throw.
+  Maybe this should be an type constructor invocation wrapper instead?"
   [type]
   `(let [ctor# (T ~type)]
      (with-ctor-meta
