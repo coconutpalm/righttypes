@@ -537,15 +537,17 @@ this default is that optional map keys with typos won't be automatically detecte
 (defmacro T!
   "Like `T` but returns a type constructor that immediately throws ex-info
   if its input value fails to match the specified type.  If the type constructor
-  throws, the `ex-data` is the `TypeCtorError` returned by the type constructor."
+  throws, the `ex-data` is the `TypeCtorError` returned by the type constructor.
+
+  Experimental API."
   [type]
   `(let [ctor# (T ~type)]
-    (with-ctor-meta
-      (fn [x#]
-        (let [result# (ctor# x#)]
-          (if (ctor-failure? result#)
-            (throw (ex-info "Type construction failure" {:failure result#}))
-            result#))))))
+     (with-ctor-meta
+       (fn [x#]
+         (let [result# (ctor# x#)]
+           (if (ctor-failure? result#)
+             (throw (ex-info "Type construction failure" {:failure result#}))
+             result#))))))
 
 #_{:clj-kondo/ignore [:unused-value]}
 (tests
