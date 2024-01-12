@@ -94,9 +94,11 @@ Type Constructor arguments are determined to be valid iff `(predicate args)` pas
 *  For validating sequences, `predicate` can be a vector of predicates where each predicate validates the value in the corresponding position.
 *  For validating maps, `predicate` can be a map in the form `{:key pred?}` or `{(Opt. :key) pred?}` where the `(Opt. :key)` form denotes an optional key.  (Extra map keys are allowed by default and not checked, but this behavior can be overridden.)
 
-There are helper functions for creating specialized predicates.  For example, `seq-of` where each element in a `Seqable` collection must satisfy a predicate.
+## Is this the only way to build a type constructor function?
 
-You can write your own predicates.  For details, see the source code and tests.
+No.  There are helper functions for creating other specialized kinds of type constructors.  For example, `seq-of` describes a type constructor function where each element in a `Seqable` collection must satisfy a predicate.
+
+You can write your own functions that buiild type constructors too.  For details, see the source code and tests.
 
 ## What do failure messages look like?
 
