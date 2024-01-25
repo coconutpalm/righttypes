@@ -1,14 +1,13 @@
 # RightTypes - Because a type constructor is executable documentation that behaves like identity unless it fails; then it provides detailed diagnostics about what failed where.
 
-*Knowing* that one's data is clean increases confidence in one's own code!
-
-Knowing *exactly where* data does not match expactations increases productivity when things go wrong.
+Here are some guiding principles:
 
 *  Not a framework - Just some functions / macros that stand on their own.
 *  Doesn't try to \"boil the ocean\" or be the One Type Library to Rule Them All.
 *  Coexists with and enhances other Clojure \"type\" libraries including Specs and Malli.
 *  Totally transparent to the rest of your code.
-*  Implemented in barely a page of code with 0 dependencies.
+*  The core is implemented approximately a page of code.
+*  0 dependencies.
 *  Thoroughly tested using rich comment form tests that illustrate correct usage.
 
 ## Show me some code
