@@ -182,4 +182,4 @@ user> (Person {:employer-name "The Cypress Group"
 
 ## Status of this library
 
-I've now used this library for one small internal production project, and it has exceeded my expectations.  Please let me know what works well for you and what can be improved.  Of course, pull requests are welcome!
+I've now used this library for several small production projects, and it has exceeded my expectations.  Please let me know what works well for you and what can be improved.  Of course, pull requests are welcome!
