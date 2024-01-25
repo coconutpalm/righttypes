@@ -15,7 +15,39 @@ Knowing *exactly where* data does not match expactations increases productivity 
 
 Imagine a "type constructor" that is just a function that behaves like `identity` for valid input values and that otherwise returns (or throws) detailed error diagnostics when input values aren't valid.
 
-Then one could write:
+Here's a simple example:
+
+```clojure
+(def Address
+  (T {:line1 string?
+      (Opt. :line2) string?
+      :city string?
+      :state string?
+      :zip string?}))
+```
+
+`T` is a macro that creates a type constructor function.  Type constructors behave like `identity` when evaluating correctly-formed inputs:
+
+```clojure
+user>  (Address {:line1 "1460 Broadway 12th floor"
+                 :city "New York" :state "NY" :zip "10036"})
+{:line1 "1460 Broadway 12th floor", :city "New York", :state "NY", :zip "10036"}
+```
+
+When the input is malformed, it returns detailed error information.
+
+```clojure
+(Address {:line1 "1460 Broadway 12th floor"
+                 :city "New York" :state :NY :zip 42})
+{:x {:line1 "1460 Broadway 12th floor", :city "New York", :state :NY, :zip 42},
+ :errors [{:pos :state, :msg "(:state string? :NY)"} {:pos :zip, :msg "(:zip string? 42)"}],
+ :msg ":state:(:state string? :NY), :zip:(:zip string? 42)",
+ :path ()}
+```
+
+(The `:path` captures the path to the error if the error is nested somewhere below the top level.)
+
+Let's look at a more detailed example.
 
 ```clojure
 ; First some maps used like enumerations
