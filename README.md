@@ -87,7 +87,9 @@ Let's look at a more detailed example.
 
 ```
 
-In the above code the `T` macro builds a type constructor function that always returns a value: either its input (for type matches) or a `TypeCtorError` for mismatches.  The `T!` macro behaves like `identity` for type matches, but throws `ex-info` with a `TypeCtorError` inside `ex-data` for type mismatches.
+In the above code the `T` macro builds a type constructor function that always returns a value: either its input (for type matches) or a `TypeCtorError` for mismatches.  
+
+In contrast, the `T!` macro behaves like `identity` for type matches, but throws `ex-info` with a `TypeCtorError` inside `ex-data` for type mismatches.
 
 Type mismatch failures bubble up the data structure, so if `Address` fails, `Person` will fail (and `throw`).
 
