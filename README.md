@@ -40,7 +40,7 @@ user>  (Address {:line1 "1460 Broadway 12th floor"
 When the input is malformed, it returns detailed error information.
 
 ```clojure
-(Address {:line1 "1460 Broadway 12th floor"
+user> (Address {:line1 "1460 Broadway 12th floor"
                  :city "New York" :state :NY :zip 42})
 {:x {:line1 "1460 Broadway 12th floor", :city "New York", :state :NY, :zip 42},
  :errors [{:pos :state, :msg "(:state string? :NY)"} {:pos :zip, :msg "(:zip string? 42)"}],
