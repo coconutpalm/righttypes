@@ -20,10 +20,6 @@ Because type constructor functions of this style behave like identity in the nor
 
 ## Show me some code
 
-Imagine a "type constructor" that is just a function that behaves like `identity` for valid input values and that otherwise returns (or throws) detailed error diagnostics when input values aren't valid.
-
-Here's a simple example:
-
 ```clojure
 (def Address
   (T {:line1 string?
