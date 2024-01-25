@@ -1,8 +1,12 @@
 # RightTypes
 
-A type constructor is a function that behaves like identity unless it fails; then it provides detailed diagnostics about what failed where.  It provides machine and human-readable documentation and gets out of the way in every other case.  
+In RightTypes, a type constructor is a function that behaves like identity unless it fails.
 
-Because it behaves like identity in the normal case, its presence is completely transparent to the rest of your code.
+By expressing types this way, type constructor functions provide machine and human-readable documentation and don't pollute the rest of your code.  
+
+In the exceptional case, a type constructor function returns a value that unambiguously is an error value (containing detailed diagnostics) or throws ex-info with this diagnostic value in ex-data.
+
+Because type constructor functions of this style behave like identity in the normal case, their presence is completely transparent to the rest of your code.
 
 ## Guiding principles
 
