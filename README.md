@@ -1,6 +1,6 @@
 # RightTypes
 
-In RightTypes, a type constructor is a function that behaves like identity unless it fails.
+In RightTypes, a type constructor is a function that behaves like identity for valid input.
 
 By expressing types this way, type constructor functions provide machine and human-readable documentation and don't pollute the rest of your code.  
 
