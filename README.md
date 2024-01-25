@@ -1,6 +1,8 @@
-# RightTypes - Because a type constructor is executable documentation that behaves like identity unless it fails; then it provides detailed diagnostics about what failed where.
+# RightTypes
 
-Here are some guiding principles:
+A type constructor is a function that behaves like identity unless it fails; then it provides detailed diagnostics about what failed where.  It provides machine and human-readable documentation and gets out of the way in every other case.
+
+## Guiding principles
 
 *  Not a framework - Just some functions / macros that stand on their own.
 *  Doesn't try to \"boil the ocean\" or be the One Type Library to Rule Them All.
