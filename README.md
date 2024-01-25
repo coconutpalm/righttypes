@@ -14,7 +14,7 @@ Because type constructor functions of this style behave like identity in the nor
 *  Doesn't try to \"boil the ocean\" or be the One Type Library to Rule Them All.
 *  Coexists with and enhances other Clojure \"type\" libraries including Specs and Malli.
 *  Totally transparent to the rest of your code.
-*  The core is implemented approximately a page of code.
+*  The core is approximately a page of code.
 *  0 dependencies.
 *  Thoroughly tested using rich comment form tests that illustrate correct usage.
 
