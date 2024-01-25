@@ -1,4 +1,4 @@
-# RightTypes - Because computing mismatches is more useful than asking if (valid? x).
+# RightTypes - Because a type constructor is executable documentation that behaves like identity unless it fails; then it provides detailed diagnostics about what failed where.
 
 *Knowing* that one's data is clean increases confidence in one's own code!
 
