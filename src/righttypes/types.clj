@@ -8,10 +8,9 @@
   * Coexists well with and enhances other Clojure \"type\" libraries, particularly Specs.
   * Totally transparent to the rest of your code.
   * Integrates well with :pre, :post, and (assert ...).
-  * Implemented in barely a page of code with 0 dependencies.
-
-  See the `T` macro for more."
+  * Implemented in barely a page of code with 0 dependencies."
   (:require [clojure.set :as set]
+            [clojure.pprint :refer [pprint]]
             [hyperfiddle.rcf :refer [tests]])
   (:gen-class))
 
@@ -54,6 +53,10 @@
       msg)))
 
 
+;; x - The object with error(s)
+;; errors - For a collection: A vector of `TypeCtorError` for each error'd element
+;; msg - A human-readable message identifying the expected form and the error appropriate to this level in the collection
+;; path - nil if not a collection, else the path to the error within the collection
 (defrecord TypeCtorError [x errors msg path]
   :load-ns true
 
