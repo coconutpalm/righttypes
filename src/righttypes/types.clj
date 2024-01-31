@@ -78,12 +78,12 @@
 
   Object
   (toString [this]
-    (if (first (:path this))
-      (str "{ "
-           (apply str "path://" (conj (vec (interpose "/" (:path this))) "/"))
-           " [" (:msg this) "]"
-           " }")
-      (str (:msg this)))))
+    (let [path-str (when (first (:path this))
+                     (str "{ "
+                          (apply str "path://" (conj (vec (interpose "/" (:path this))) "/"))
+                          " [" (:msg this) "]"
+                          " }"))]
+      (str (if path-str (str path-str "\n") "") (with-out-str (pprint this))))))
 
 
 (defn error-positions
