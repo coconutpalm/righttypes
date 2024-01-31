@@ -203,7 +203,7 @@ this default is that optional map keys with typos won't be automatically detecte
   disallow-unexpected-map-keys {:pred (fn [_] false) :type-str "unexpected-map-key"})
 
 
-(defmacro disallow-unexpected-map-keys-in
+(defmacro with-disallow-unexpected-map-keys
   "A convenience macro to bind `*undefined-map-key-predicate*` to `disallow-unexpected-map-keys`
   in a scope."
   [& scope]
@@ -229,7 +229,7 @@ this default is that optional map keys with typos won't be automatically detecte
 
         (with-ctor-meta
           (fn [m]
-            (let [missing-keys  (set/difference required-keys (set (keys m)))]
+            (let [missing-keys (set/difference required-keys (set (keys m)))]
               (if-not (empty? missing-keys)
                 (let [errors (->> missing-keys
                                 (map (fn [k]
@@ -474,7 +474,7 @@ this default is that optional map keys with typos won't be automatically detecte
         (Person {:first 'Charles :middle :m :last "Brown"})]) := [#{:first} #{:first :middle}]
 
   "By default, misspelled optional keys aren't detected.  Here's how to change that default behavior:"
-  (disallow-unexpected-map-keys-in
+  (with-disallow-unexpected-map-keys
     (def Person (T {:first string?
                     (Opt. :middle) string?
                     :last string?})))
