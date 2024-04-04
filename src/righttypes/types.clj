@@ -575,36 +575,115 @@ this default is that optional map keys with typos won't be automatically detecte
   "Returns a transducer suitable for transforming a seq of maps into a map of {:key {:id :key}} using `into`.
 
   (into {} (index-by :key) [{:key :id, ...} ...]"
-  [field]
-  (map (fn [x] [(get x field) x])))
+  [k]
+  (let [undef-sequence (atom 0)]
+    (map (fn [x]
+           (let [val (get x k ::UNDEFINED)]
+             (if (= val ::UNDEFINED)
+               (do
+                 (swap! undef-sequence inc)     ;; FIXME!!!
+                 [(keyword (str "undef-key-" @undef-sequence))])
+               [val x]))))))
 
 
-(defn indexed
-  "A type constructor to build a map of maps, where a field in each value-map is also the `index-key`.
+(defn- index-ctor
+  "Given a map-ctor and an expected key to be used for indexing a collection of maps, return
+  a new type constructor that checks that the expected key is present and sets the TypeCtorError path
+  field appropriately if the map constructor fails."
+  [index-key map-ctor]
+  (with-ctor-meta
+    (fn [x]
+      (let [index-val (get x index-key ::UNDEFINED)]
+        (if (= index-val ::UNDEFINED)
+          (TypeCtorError. x [] (str "[" index-key "]: Key not found in map.") '())
+          (let [result (map-ctor x)]
+            (if (ctor-failure? result)
+              (TypeCtorError. x [] (:msg result) (conj (seq (:path result)) index-val))
+              result)))))))
+
+#_{:clj-kondo/ignore [:unused-value]}
+(tests
+  "Happy path"
+  (let [x {:key :charlie-brown :first-name "Charlie" :last-name "Brown"}
+        Person (T {:key keyword? :first-name string? :last-name string?})
+        IdxPerson (index-ctor :key Person)]
+
+    (IdxPerson x) := x))
+
+(defn indexed'
+  "Returns a type constructor to build a map of maps from a sequence of maps, where a field in
+  each value-map is also the `index-key`.
   e.g.:
 
-  {:index-value {:key :index-value}}
-
-  EXPERIMENTAL: TODO: Validate result and return TypeCtorError as needed"
-  [map-ctor index-key]
+  [ {:index-value {:key :index-value}}, ... ]"
+  [map-ctor source-lineinfo index-key]
   (with-ctor-meta
     (fn [& maps]
-      (let [result (cond
-                     (nil? maps) {}
-                     :else (into {} (index-by index-key) (map map-ctor maps)))]
-        result))))
+      (cond
+        (nil? maps) {}
+        :else (let [indexed-ctor (index-ctor index-key map-ctor)
+                    checked-maps (map indexed-ctor maps)
+                    maybe-add-error (fn [prior v]
+                                      (if (ctor-failure? v)
+                                        (conj prior v)
+                                        prior))
+                    errors (reduce maybe-add-error [] checked-maps)]
+                (if (empty? errors)
+                  (into {} (index-by index-key) checked-maps)
+                  (TypeCtorError. maps errors source-lineinfo nil)))))))
+
+
+(defmacro indexed
+    [map-ctor index-key]
+    (let [line-col (seq (meta &form))
+          pretty   (fn [x] (if (instance? clojure.lang.Named x) (name x) (pr-str x)))
+          ctor-src (pretty map-ctor)
+          sourceinfo (str (.getName *ns*) line-col ": Failure creating (indexed " ctor-src " " index-key ")")]
+      `(indexed' ~map-ctor ~sourceinfo ~index-key)))
 
 
 #_{:clj-kondo/ignore [:unused-value :unused-binding]}
 (tests
-  "Happy path"
-  (def Person (T {:key keyword? :first-name string? :last-name string?}))
-  (def PersonDB (indexed Person :key))
 
-  (let [testee (PersonDB {:key :franken :first-name "Franken" :last-name "Stein"}
-                         {:key :charlie :first-name "Charlie" :last-name "Brown"})]
-    (-> testee :franken :last-name) := "Stein")
+  (with-disallow-unexpected-map-keys
+    (def Person (T {:key keyword? :first-name string? :last-name string?}))
 
-  "Sadness (TODO: Because for now we're happy all the time)")
+    ;; Uncomment this to get better compiler diagnostics when working on the macro implementation.
+    #_(def PersonDB (indexed' Person "Failure creating Person" :key))
+    (def PersonDB (indexed Person :key)))
 
-(println)
+  (tests
+    "Happy path"
+    (let [testee (PersonDB {:key :franken :first-name "Franken" :last-name "Stein"}
+                           {:key :charlie :first-name "Charlie" :last-name "Brown"})]
+      (-> testee :franken :last-name) := "Stein"
+      (-> testee :charlie :last-name) := "Brown"))
+
+  (tests
+    "Sadness: Specified key field not found (or misspelled)"
+    (let [failure (PersonDB {:keeeey :franken :first-name "Franken" :last-name "Stein"})]
+      (-> failure :errors count)       := 1
+      (-> failure :errors first :path) := '()
+      (-> failure :errors first :msg)  := "[:key]: Key not found in map."
+      ,))
+
+  (tests
+    "Sadness: Missing key in map"
+    (let [failure (PersonDB {:key :franken :first-name "Franken" :last---name "Stein"})]
+      (-> failure :errors count)       := 1
+      (-> failure :errors first :path) := '(:franken)
+      (-> failure :errors first :msg)  := "Missing k/v(s): :last-name string?"
+      ,))
+
+  (tests
+    "Sadness: A field value fails type checking"
+    (let [failure (PersonDB {:key :franken :first-name "Franken" :last-name :stein})]
+      (-> failure :errors count)       := 1
+      (-> failure :errors first :path) := '(:franken :last-name)
+      (-> failure :errors first :msg)  := ":last-name:(:last-name string? :stein)"
+      ,))
+  ,)
+
+
+(tests "ns loaded"
+  (println "\n" *ns* "loaded."))
