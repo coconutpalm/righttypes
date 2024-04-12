@@ -634,12 +634,13 @@ this default is that optional map keys with typos won't be automatically detecte
 
 
 (defmacro indexed
-    [map-ctor index-key]
-    (let [line-col (seq (meta &form))
-          pretty   (fn [x] (if (instance? clojure.lang.Named x) (name x) (pr-str x)))
-          ctor-src (pretty map-ctor)
-          sourceinfo (str (.getName *ns*) line-col ": Failure creating (indexed " ctor-src " " index-key ")")]
-      `(indexed' ~map-ctor ~sourceinfo ~index-key)))
+  ""
+  [map-ctor index-key]
+  (let [line-col (seq (meta &form))
+        pretty   (fn [x] (if (instance? clojure.lang.Named x) (name x) (pr-str x)))
+        ctor-src (pretty map-ctor)
+        sourceinfo (str (.getName *ns*) line-col ": Failure creating (indexed " ctor-src " " index-key ")")]
+    `(indexed' ~map-ctor ~sourceinfo ~index-key)))
 
 
 #_{:clj-kondo/ignore [:unused-value :unused-binding]}
