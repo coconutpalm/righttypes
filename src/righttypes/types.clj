@@ -634,7 +634,26 @@ this default is that optional map keys with typos won't be automatically detecte
 
 
 (defmacro indexed
-  ""
+  "Constructs a map of maps, where the outer map indexes the inner maps based on a unique key in the inner maps.
+
+  `map-ctor` is a constructor to validate the inner maps.
+  `index-key` is a key whose value must be uniquely present in each inner map that will be used as the outer map's index.
+
+  e.g.: Given:
+
+  ```
+  (def Person (T {:key keyword? :first-name string? :last-name string?}))
+  (def PersonDB (indexed Person :key))
+  ```
+
+  one can now write and expect:
+
+  ```
+  (let [testee (PersonDB {:key :franken :first-name \"Franken\" :last-name \"Stein\"}
+                         {:key :charlie :first-name \"Charlie\" :last-name \"Brown\"})]
+      (-> testee :franken :last-name) := \"Stein\"
+      (-> testee :charlie :last-name) := \"Brown\")
+  ```"
   [map-ctor index-key]
   (let [line-col (seq (meta &form))
         pretty   (fn [x] (if (instance? clojure.lang.Named x) (name x) (pr-str x)))
