@@ -1,22 +1,35 @@
 # RightTypes
 
-In RightTypes, a type constructor is a function that behaves like `identity` for valid input.
+Utilities to do typey things in Clojure in a way that's more idiomatic to Lisp than many prior attempts.  Mostly standalone functions and macros; not a framework!
 
-By expressing types this way, type constructor functions provide machine and human-readable documentation and don't pollute the rest of your code.  
+## What do I get?
 
-In the exceptional case, a type constructor function returns a value that unambiguously is an error value (containing detailed diagnostics) or throws ex-info with this diagnostic value in ex-data.
+Foundational utilities that enrich Clojure's already-rich type system:
 
-Because type constructor functions of this style behave like identity in the normal case, their presence is completely transparent to the rest of your code.
+*  Idiomatic schemas / "type constructors"
+*  A collection of "empty" values to unambiguously designate error and non-error conditions.  These automatically compose correctly under string concatination and `mapcat` (`flatMap` if you're coming from Scala) operations.
+*  A `failure` multimethod for polymorphically defining what values designate failures.
+*  A `convert` multimethod preconfigured to ease Java date/time type madness and much more.
+
+Additional low-level but domain-specific utilities for dealing with multiline strings, converting among various naming conventions, Java interop and more.
 
 ## Guiding principles
 
-*  Not a framework - Just some functions / macros that stand on their own.
+*  Not just type checking; includes features Scala programmers miss but without macros (a monoid zero value)
 *  Doesn't try to \"boil the ocean\" or be the One Type Library to Rule Them All.
 *  Coexists with and enhances other Clojure \"type\" libraries including Specs and Malli.
 *  Totally transparent to the rest of your code.
-*  The core is approximately a page of code.  You could maintain it if you had to / wanted to.
+*  The core type checking namespace is approximately a printed page of code.  You could maintain it if you had to / wanted to.
 *  0 dependencies.
-*  Thoroughly tested using rich comment form tests that illustrate correct usage.
+*  Tested using rich comment form tests that illustrate correct usage.
+
+## Schemas / checking
+
+A few simple functions and macros that make it much easier to specify expected (nested) data schemas and check values.  Not a framework!  Want to know more?
+
+In RightTypes, a type constructor is just a function that behaves like `identity` for valid input and returns (or throws) a value that is unambiguously an error otherwise.
+
+By expressing types this way, type constructor functions provide machine and human-readable documentation and don't pollute the rest of your code.  Types expressed this way are congruent with Specs and Malli.  They enhance your code base and don't get in the way.
 
 ## Show me some code
 
@@ -87,7 +100,7 @@ Let's look at a more detailed example.
 
 ```
 
-In the above code the `T` macro builds a type constructor function that always returns a value: either its input (for type matches) or a `TypeCtorError` for mismatches.  
+In the above code the `T` macro builds a type constructor function that always returns a value: either its input (for type matches) or a `TypeCtorError` for mismatches.
 
 In contrast, the `T!` macro behaves like `identity` for type matches, but throws `ex-info` with a `TypeCtorError` inside `ex-data` for type mismatches.
 
@@ -182,6 +195,6 @@ user> (Person {:employer-name "The Cypress Group"
  :msg "Missing k/v(s): :contact-type (set (vals contact-types)), :person-category (set (vals person-categories))"}
 ```
 
-## Status of this library
+## Status of the `types` subsystem
 
 I've now used this library for several small production projects, and it has exceeded my expectations.  Please let me know what works well for you and what can be improved.  Of course, pull requests are welcome!

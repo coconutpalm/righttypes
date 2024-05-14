@@ -1,4 +1,4 @@
 {:paths ["src" "dev"]
 
- :deps {org.clojure/clojure {:mvn/version "1.10.3"}
+ :deps {org.clojure/clojure {:mvn/version "1.12.0-alpha11"}
         com.hyperfiddle/rcf {:mvn/version "20220926-202227"}}}

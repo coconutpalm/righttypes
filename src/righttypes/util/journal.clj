@@ -1,8 +1,7 @@
-(ns helper.journal
+(ns righttypes.util.journal
   "Utilities for defining an activity journal data structure."
   (:import [java.util Date]
            [java.text SimpleDateFormat FieldPosition]))
-
 
 ;; # Date-time and activity journaling
 
