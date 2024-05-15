@@ -8,7 +8,7 @@
 
   See the tests for various examples of constructing objects and invoking methods using let-map,
   letfn-map, and => below."
-  (:require [righttypes.util.lets :refer [let-map letfn-map]]
+  (:require [righttypes.util.lets :refer [letfn-map]]
             [hyperfiddle.rcf :refer [tests]]))
 
 
