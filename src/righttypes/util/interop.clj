@@ -2,7 +2,7 @@
   "Simplify Java object interop"
   (:require [clojure.string :as str]
             [righttypes.util.names :refer [keywordize getter setter]]
-            [righttypes.nothing :refer [something?]]
+            [righttypes.nothing :refer [something]]
             [righttypes.conversions :refer [convert]])
   (:import [clojure.lang Reflector]))
 
@@ -58,7 +58,7 @@
   [object property-name new-value]
   (letfn [(invoke-one-of [ms object new-value-class new-value]
             (when-let [m (first ms)]
-              (if-let [arg (something? (convert (first (.getParameterTypes m)) new-value))]
+              (if-let [arg (something (convert (first (.getParameterTypes m)) new-value))]
                 (do
                   (.invoke m object (array [Object] arg))
                   true)
