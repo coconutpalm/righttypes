@@ -4,13 +4,13 @@
   <packaging>jar</packaging>
   <groupId>io.github.coconutpalm</groupId>
   <artifactId>righttypes</artifactId>
-  <version>0.7.0</version>
+  <version>0.7.1</version>
   <name>righttypes</name>
   <scm>
     <url>https://github.com/coconutpalm/righttypes</url>
     <connection>scm:git:git://github.com/coconutpalm/righttypes.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/coconutpalm/righttypes.git</developerConnection>
-    <tag>v0.7.0</tag>
+    <tag>v0.7.1</tag>
   </scm>
   <dependencies>
     <dependency>
@@ -39,9 +39,9 @@
     </repository>
   </repositories>
   <licenses>
-		<license>
-			<name>Eclipse Public License 2.0</name>
-			<url>https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt</url>
-		</license>
-	</licenses>
+    <license>
+      <name>Eclipse Public License 2.0</name>
+      <url>https://www.eclipse.org/org/documents/epl-2.0/EPL-2.0.txt</url>
+    </license>
+  </licenses>
 </project>

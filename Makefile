@@ -1,7 +1,7 @@
 jar:
-	clojure -X:jar :version '"0.7.0"'
+	clojure -X:jar :version '"0.7.1"'
 
 deploy:
-	clj -X:deploy
+	env CLOJARS_USERNAME=coconutpalm CLOJARS_PASSWORD=$CLOJARS_PASSWORD clj -X:deploy
 
 ALL: jar deploy
