@@ -10,7 +10,7 @@
     <url>https://github.com/coconutpalm/righttypes</url>
     <connection>scm:git:git://github.com/coconutpalm/righttypes.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/coconutpalm/righttypes.git</developerConnection>
-    <tag>v0.7.0-SNAPSHOT</tag>
+    <tag>v0.7.0</tag>
   </scm>
   <dependencies>
     <dependency>
