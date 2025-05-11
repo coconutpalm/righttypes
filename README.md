@@ -1,5 +1,7 @@
 # RightTypes
 
+[![Clojars Project](https://img.shields.io/clojars/v/io.github.coconutpalm/righttypes.svg)](https://clojars.org/io.github.coconutpalm/righttypes)
+
 Utilities to do typey things in Clojure in a way that's more idiomatic to Lisp than many prior attempts.  Mostly standalone functions and macros; not a framework!
 
 ## What do I get?
