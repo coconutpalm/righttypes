@@ -1,5 +1,15 @@
-{:paths ["src" "dev"]
+{:paths ["src"]
 
  :deps {org.clojure/clojure {:mvn/version "1.12.0-alpha12"}
         potemkin/potemkin   {:mvn/version "0.4.3"}
-        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}}}
+        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}}
+
+ :aliases {:dev {:paths ["src" "dev"]}
+
+           :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.211"}}
+                 :exec-fn hf.depstar/jar
+                 :exec-args {:jar "clojure-desktop-toolkit.jar" :sync-pom true}}
+
+           :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.2"}}
+                    :exec-fn deps-deploy.deps-deploy/deploy
+                    :exec-args {:installer :remote :artifact "clojure-desktop-toolkit.jar"}}}}

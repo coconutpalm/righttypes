@@ -11,3 +11,5 @@ public
 *.iml
 jobsearch-report.*
 .calva
+
+clojure-desktop-toolkit.jar
