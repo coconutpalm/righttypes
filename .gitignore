@@ -5,10 +5,12 @@
 /.lsp/
 /.portal/
 /.nrepl-port
+target
 public
 .DS_Store
 .idea
 *.iml
+*.jar
 jobsearch-report.*
 .calva
 

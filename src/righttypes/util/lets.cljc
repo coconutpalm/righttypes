@@ -9,6 +9,7 @@
   let-map returns the result of conj-ing the result map into the let
   expression map.  Otherwise it returns a vector containing the let
   expression map followed by the result."
+  {:clj-kondo/lint-as 'clojure.core/let}
   [var-exprs & body]
   (let [vars (map (fn [[var form]] [(keyword var) var]) (partition 2 var-exprs))
         has-body (not (empty? body))]
@@ -42,6 +43,7 @@
   fn-map returns the result of conj-ing the result map into the function
   map.  Otherwise it returns a vector containing the function map
   followed by the result."
+  {:clj-kondo/lint-as 'clojure.core/let}
   [fn-exprs & body]
   (let [fn-refs (map (fn [f] [(keyword (first f)) (first f)]) fn-exprs)
         has-body (not (empty? body))]
