@@ -9,8 +9,10 @@
 ALL: jar deploy
 
 jar:
-	exec clojure -X:jar :version '"0.2.2"'
+	exec clojure -X:jar :version '"0.7.3"'
 
 deploy:
 	./deploy.sh
 
+clean:
+	rm -f *.jar
