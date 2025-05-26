@@ -8,8 +8,8 @@
 
            :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.211"}}
                  :exec-fn hf.depstar/jar
-                 :exec-args {:jar "clojure-desktop-toolkit.jar" :sync-pom true}}
+                 :exec-args {:jar "righttypes.jar" :sync-pom true}}
 
            :deploy {:replace-deps {slipset/deps-deploy {:mvn/version "0.2.2"}}
                     :exec-fn deps-deploy.deps-deploy/deploy
-                    :exec-args {:installer :remote :artifact "clojure-desktop-toolkit.jar"}}}}
+                    :exec-args {:installer :remote :artifact "righttypes.jar"}}}}
