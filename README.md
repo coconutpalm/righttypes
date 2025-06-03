@@ -22,7 +22,7 @@ Additional low-level but domain-specific utilities for dealing with multiline st
 *  Coexists with and enhances other Clojure \"type\" libraries including Specs and Malli.
 *  Totally transparent to the rest of your code.
 *  The core type checking namespace is approximately a printed page of code.  You could maintain it if you had to / wanted to.
-*  Only 1 dependency: `def-map-type` from Potemkin is used to define the (partly polymorphic) monoid zero type.
+*  Only 1 dependency: `def-map-type` from Potemkin is used to define the (partly polymorphic) monoid zero/`Nothing` type.
 *  Tested using rich comment form tests that illustrate correct usage.
 
 ## Schemas / checking
