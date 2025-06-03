@@ -11,7 +11,7 @@ Foundational utilities that enrich Clojure's already-rich type system:
 *  Idiomatic schemas / "type constructors"
 *  A collection of "empty" values to unambiguously designate error and non-error conditions.  These automatically compose correctly under string concatination and `mapcat` (`flatMap` if you're coming from Scala) operations.
 *  A `failure` multimethod for polymorphically defining what values designate failures.
-*  A `convert` multimethod preconfigured to ease Java date/time type madness and much more.
+*  Various format conversion functions; e.g.: `->kebab-case`.
 
 Additional low-level but domain-specific utilities for dealing with multiline strings, converting among various naming conventions, Java interop and more.
 
@@ -22,7 +22,7 @@ Additional low-level but domain-specific utilities for dealing with multiline st
 *  Coexists with and enhances other Clojure \"type\" libraries including Specs and Malli.
 *  Totally transparent to the rest of your code.
 *  The core type checking namespace is approximately a printed page of code.  You could maintain it if you had to / wanted to.
-*  0 dependencies.
+*  Only 1 dependency: `def-map-type` from Potemkin is used to define the (partly polymorphic) monoid zero type.
 *  Tested using rich comment form tests that illustrate correct usage.
 
 ## Schemas / checking
