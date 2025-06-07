@@ -1,20 +1,8 @@
 (ns righttypes.conversions
-  "A 'convert' multimethod that can convert between arbitrary types.  Default implementations
-  are supplied for Clojure's built-in types."
+  "A 'convert' multimethod that can convert between arbitrary types.  This should only
+   be used as a consistent/standard way to allow function parameters to normalize their
+   parameter values into the function's preferred type(s)."
   (:require [righttypes.nothing :as nothingness]))
-
-
-(def Map
-  "Alias for clojure.lang.IPersistentMap for use in type conversions"
-  clojure.lang.IPersistentMap)
-
-(def Vector
-  "Alias for clojure.lang.PersistentVector"
-  clojure.lang.PersistentVector)
-
-(def Seq
-  "Alias for clojure.lang.ISeq"
-  clojure.lang.ISeq)
 
 (def Date
   "Alias for java.util.Date"
@@ -42,13 +30,9 @@
   (contains? #{"on" "yes" "true"} (.toLowerCase str)))
 
 
-(defmethod convert [Map Vector] [_ v]
-  (assert (even? (count v)) "Vector/Seq must contain an even number of arguments as key-value pairs")
-  (apply assoc {} v))
-
 ;; What's in a name?
 (defmethod convert [clojure.lang.Named Class] [_ c]
-  (.getName c))
+  (symbol (.getName c)))
 
 (defmethod convert [clojure.lang.Named String] [_ x]
   (symbol x))
@@ -76,23 +60,6 @@
 
 (defmethod convert [SqlDate Date] [_ d]
   (java.sql.Date. (.getTime d)))
-
-
-;; Synonyms...
-(defmethod convert [clojure.lang.PersistentArrayMap Vector] [_ v]
-  (convert Map v))
-
-(defmethod convert [clojure.lang.PersistentHashMap Vector] [_ v]
-  (convert Map v))
-
-(defmethod convert [clojure.lang.PersistentTreeMap Vector] [_ v]
-  (convert Map v))
-
-(defmethod convert [Map Seq] [_ s]
-  (convert Map (vec s)))
-
-(defmethod convert [Map clojure.lang.ASeq] [_ s]
-  (convert Map (vec s)))
 
 
 (defmethod convert :default [dest-class src-instance]
